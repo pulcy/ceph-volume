@@ -30,7 +30,7 @@ function cleanup {
     if [ -z "$TRAPPED" ]; then
         echo "Unmounting ${TARGET}"
         TRAPPED=1
-        umount ${TARGET}
+        umount -l ${TARGET}
     fi
 }
 

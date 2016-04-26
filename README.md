@@ -38,3 +38,15 @@ docker run -it --net=host --privileged -e TARGET=/foo \
     -v /usr/bin/etcdctl:/usr/bin/etcdctl \
     pulcy/ceph-volume:latest
 ```
+
+## Waiting
+
+By default, ceph-volume will mount and then exit. If you set the WAIT environment variable to something non-empty,
+it will wait until being terminated. Upon termination it will unmount the mounted volume.
+
+```
+docker run -it --net=host --privileged -e WAIT=1 \
+    -v /hostmount:/data:shared \
+    -v /usr/bin/etcdctl:/usr/bin/etcdctl \
+    pulcy/ceph-volume:latest
+```

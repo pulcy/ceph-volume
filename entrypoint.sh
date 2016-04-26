@@ -19,4 +19,27 @@ if [ ! -z "$PREFIX" ]; then
     umount /mnt/control
 fi
 
+# Do the actual mount
+echo "Mounting ${TARGET}"
 mount -t ceph $MOUNT_SRC:/$PREFIX ${TARGET}
+
+function cleanup {
+    if [ -z "$TRAPPED" ]; then
+        echo "Unmounting ${TARGET}"
+        TRAPPED=1
+        umount ${TARGET}
+    fi
+}
+
+# Wait until termination
+if [ ! -z "$WAIT" ]; then
+    unset TRAPPED
+    trap cleanup INT TERM KILL EXIT
+    # Now sleep a long time
+    while [ -z "$TRAPPED" ]
+    do
+        sleep 360000000 &
+        BACKGROUND=$!
+        wait $BACKGROUND
+    done
+fi

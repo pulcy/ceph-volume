@@ -1,0 +1,5 @@
+{
+    "registry": "pulcy",
+    "image": "ceph-volume",
+    "tag-latest": true
+}

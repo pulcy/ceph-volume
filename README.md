@@ -27,3 +27,14 @@ docker run -it --net=host --privileged -e PREFIX=mysubdir \
     -v /usr/bin/etcdctl:/usr/bin/etcdctl \
     pulcy/ceph-volume:latest
 ```
+
+## Mountpoint
+
+By default the ceph filesystem is mounted on `/data`. To customize this, set a `TARGET` environment variable.
+
+```
+docker run -it --net=host --privileged -e TARGET=/foo \
+    -v /hostmount:/foo:shared \
+    -v /usr/bin/etcdctl:/usr/bin/etcdctl \
+    pulcy/ceph-volume:latest
+```

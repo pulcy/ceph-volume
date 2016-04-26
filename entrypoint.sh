@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Variables
+: ${TARGET:="/data"}
+
 # Helpers
 function join { local IFS="$1"; shift; echo "$*"; }
 
@@ -16,4 +19,4 @@ if [ ! -z "$PREFIX" ]; then
     umount /mnt/control
 fi
 
-mount -t ceph $MOUNT_SRC:/$PREFIX /data
+mount -t ceph $MOUNT_SRC:/$PREFIX ${TARGET}

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Variables
 : ${TARGET:="/data"}
 
@@ -13,15 +15,16 @@ MOUNT_SRC=$(join , $MON_IPS)
 
 # Ensure prefix exists
 if [ ! -z "$PREFIX" ]; then
+    echo "Creating /${PREFIX}"
     mkdir -p /mnt/control
-    mount -t ceph $MOUNT_SRC:/ /mnt/control
+    mount -v -t ceph $MOUNT_SRC:/ /mnt/control
     mkdir -p /mnt/control/$PREFIX
     umount /mnt/control
 fi
 
 # Do the actual mount
 echo "Mounting ${TARGET}"
-mount -t ceph $MOUNT_SRC:/$PREFIX ${TARGET}
+mount -v -t ceph $MOUNT_SRC:/$PREFIX ${TARGET}
 
 function cleanup {
     if [ -z "$TRAPPED" ]; then
@@ -36,6 +39,7 @@ if [ ! -z "$WAIT" ]; then
     unset TRAPPED
     trap cleanup INT TERM KILL EXIT
     # Now sleep a long time
+    echo "Waiting for termination"
     while [ -z "$TRAPPED" ]
     do
         sleep 360000000 &

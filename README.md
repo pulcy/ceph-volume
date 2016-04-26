@@ -10,7 +10,7 @@ Note. etcdctl is required by this container. You must map it into the container 
 
 ```
 docker run -it --net=host --privileged \
-    -v /hostmount:/data:shared \
+    -v /media/ceph:/data:shared \
     -v /usr/bin/etcdctl:/usr/bin/etcdctl \
     pulcy/ceph-volume:latest
 ```

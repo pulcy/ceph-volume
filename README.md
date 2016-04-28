@@ -50,3 +50,14 @@ docker run -it --net=host --privileged -e WAIT=1 \
     -v /usr/bin/etcdctl:/usr/bin/etcdctl \
     pulcy/ceph-volume:latest
 ```
+
+## User, Group
+
+If you need a specific user/group id set on the mounted files, use the UID=<id> and/or GID=<id> environment variable.
+
+```
+docker run -it --net=host --privileged -e UID=999 GID=999 \
+    -v /hostmount:/data:shared \
+    -v /usr/bin/etcdctl:/usr/bin/etcdctl \
+    pulcy/ceph-volume:latest
+```

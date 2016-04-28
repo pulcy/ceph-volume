@@ -24,7 +24,14 @@ fi
 
 # Do the actual mount
 echo "Mounting ${TARGET}"
-mount -v -t ceph $MOUNT_SRC:/$PREFIX ${TARGET}
+mount -v -t ceph $MOPTS $MOUNT_SRC:/$PREFIX ${TARGET}
+
+if [ ! -z "$UID" ]; then
+    chown -R ${UID} ${TARGET}
+fi
+if [ ! -z "$GID" ]; then
+    chgrp -R ${GID} ${TARGET}
+fi
 
 function cleanup {
     if [ -z "$TRAPPED" ]; then
